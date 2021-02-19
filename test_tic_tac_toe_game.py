@@ -1,4 +1,4 @@
-from game_engine import TicTacToeGame, TicTacToeGameInfo, TicTacToeTurn
+from game_engine.tic_tac_toe_game import TicTacToeGame, TicTacToeGameInfo, TicTacToeTurn
 
 def test_scenario():
     game = TicTacToeGame(
@@ -119,11 +119,11 @@ def test_scenario():
         )
     ) == False
 
+    game.do_turn(TicTacToeTurn("Petya", 0, 0))
+    game.do_turn(TicTacToeTurn("Vasya", 0, 1))
     game.do_turn(TicTacToeTurn("Petya", 1, 0))
-    game.do_turn(TicTacToeTurn("Vasya", 1, 0))
-    game.do_turn(TicTacToeTurn("Petya", 0, 1))
     game.do_turn(TicTacToeTurn("Vasya", 1, 1))
-    game.do_turn(TicTacToeTurn("Petya", 0, 2))
+    game.do_turn(TicTacToeTurn("Petya", 2, 0))
 
     assert game.get_game_info() == TicTacToeGameInfo(
         game_id="0001",
@@ -134,10 +134,10 @@ def test_scenario():
         ],
         sequence_of_turns=[
             TicTacToeTurn("Petya", 0, 0),
-            TicTacToeTurn("Vasya", 1, 0),
-            TicTacToeTurn("Petya", 0, 1),
+            TicTacToeTurn("Vasya", 0, 1),
+            TicTacToeTurn("Petya", 1, 0),
             TicTacToeTurn("Vasya", 1, 1),
-            TicTacToeTurn("Petya", 0, 2)
+            TicTacToeTurn("Petya", 2, 0)
         ],
         first_player_id="Petya",
         second_player_id="Vasya",
@@ -151,4 +151,3 @@ def test_scenario():
             y_coordinate=2
         )
     ) == False
-
