@@ -2,7 +2,7 @@ from copy import deepcopy
 from abc import ABC, abstractmethod, abstractproperty
 from typing import List, Callable
 from dataclasses import dataclass
-from tic_tac_toe_common_lib import AbstractTicTacToeGame, TicTacToeTurn, TicTacToeGameInfo
+from .tic_tac_toe_common_lib import AbstractTicTacToeGame, TicTacToeTurn, TicTacToeGameInfo
 
 class TicTacToeGame(AbstractTicTacToeGame):
     def __init__(self, game_id: str, first_player_id: str, second_player_id: str) -> None:
@@ -25,11 +25,12 @@ class TicTacToeGame(AbstractTicTacToeGame):
         return deepcopy(self.game_info)
 
     def is_turn_correct(self, turn: TicTacToeTurn) -> bool:
-        if (turn.y_coordinate <= 2 and turn.y_coordinate >= 0 and
-        turn.x_coordinate <= 2 and turn.x_coordinate >= 0 and self.player == turn.player_id):
-            if self.get_game_info().field[turn.y_coordinate][turn.x_coordinate] != " ":
-                return False
-            return True
+        if self.game_info.winner_id == "":
+            if (turn.y_coordinate <= 2 and turn.y_coordinate >= 0 and turn.x_coordinate <= 2
+            and turn.x_coordinate >= 0 and turn.player_id == self.player):
+                if self.get_game_info().field[turn.y_coordinate][turn.x_coordinate] != " ":
+                    return False
+                return True
         return False
 
     def do_turn(self, turn: TicTacToeTurn) -> TicTacToeGameInfo:
@@ -109,8 +110,8 @@ class TicTacToeGame(AbstractTicTacToeGame):
                     flag = self.get_game_info()
                     inner = self.do_turn(TicTacToeTurn(
                         self.game_info.second_player_id,
-                        int(input())-1,
-                        int(input())-1)
+                        int(input()),
+                        int(input()))
                     )
                     if inner == flag:
                         print("такой ход невозможен")
@@ -122,6 +123,3 @@ class TicTacToeGame(AbstractTicTacToeGame):
             if self.game_info.winner_id != "":
                 print(self.game_info.winner_id)
                 break
-
-t = TicTacToeGame("0001","gg","vp")
-t.game()
