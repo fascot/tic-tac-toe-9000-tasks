@@ -6,8 +6,8 @@ from dataclasses import dataclass
 @dataclass
 class TicTacToeTurn:
     player_id: str
-    x_coordinate: int
     y_coordinate: int
+    x_coordinate: int
 
 
 @dataclass
